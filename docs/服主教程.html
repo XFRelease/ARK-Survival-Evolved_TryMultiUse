@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>禁止使用转盘（TryMultiUse） 服主教程</title>
+<style>
+/* ============================================================
+   样式区：禁止修改！
+   本模板是 xiangmujiaocheng 技能的「服主教程」专属模板（清爽文档蓝）。
+   修改此区会破坏所有项目服主教程的视觉统一。
+   ============================================================ */
+:root{--acc:#2563eb;--accbg:#eff6ff;--line:#e2e8f0;--line2:#cbd5e1;--text:#1e293b;--dim:#64748b;--bg2:#f8fafc;--ok:#16a34a;--warn:#d97706;--warnbg:#fffbeb;--warnline:#fde68a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:15.5px/1.85 "Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;color:var(--text);background:#fff}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+code{background:var(--accbg);color:#1d4ed8;border-radius:4px;padding:1px 7px;font-family:Consolas,"Courier New",monospace;font-size:13.5px}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:13px 16px;overflow:auto}
+pre code{background:none;color:#0f172a;padding:0}
+.hide{display:none!important}
+
+.hero{background:linear-gradient(180deg,#eef5ff 0%,#ffffff 100%);border-bottom:1px solid var(--line);padding:36px 20px 26px}
+.hero-in{max-width:1180px;margin:0 auto}
+.kind{display:inline-block;background:var(--acc);color:#fff;border-radius:4px;font-size:13px;padding:2px 12px;letter-spacing:2px}
+.hero h1{margin:12px 0 6px;font-size:30px}
+.hero h1 .accent{color:var(--acc)}
+.hero .sub{color:var(--dim);margin:0;font-size:15px}
+
+.toolbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.toolbar-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 20px}
+#searchInput{flex:1 1 240px;border:1px solid var(--line2);border-radius:8px;padding:8px 14px;font-size:14.5px;outline:none;background:var(--bg2)}
+#searchInput:focus{border-color:var(--acc);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line2);background:#fff;color:var(--dim);border-radius:999px;padding:5px 15px;font-size:13.5px;cursor:pointer}
+.chip:hover{border-color:var(--acc);color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.count{color:var(--dim);font-size:13px;white-space:nowrap}
+
+.layout{max-width:1180px;margin:0 auto;padding:26px 20px 70px;display:flex;gap:36px;align-items:flex-start}
+.toc{flex:0 0 215px;position:sticky;top:66px}
+.toc-title{font-size:12.5px;color:var(--dim);letter-spacing:3px;margin-bottom:8px;padding-left:10px}
+.toc a{display:block;color:var(--dim);padding:6px 10px;border-left:2px solid var(--line);font-size:14px}
+.toc a:hover{color:var(--acc);border-left-color:var(--acc);background:var(--accbg);text-decoration:none}
+.toc a.dim{opacity:.35}
+.content{flex:1 1 500px;min-width:320px}
+
+.unit{margin:0 0 38px}
+.group{font-size:12.5px;color:var(--acc);letter-spacing:2px;margin-bottom:4px}
+.unit>h2{margin:0 0 10px;font-size:22px;border-left:4px solid var(--acc);padding-left:12px}
+.lead{color:var(--dim);margin:0 0 14px;font-size:14.5px}
+.unit h3{font-size:16.5px;margin:20px 0 8px}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:16px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:15px 17px;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:.15s}
+.card:hover{border-color:var(--acc);box-shadow:0 4px 14px rgba(37,99,235,.12)}
+.card .icon{font-size:22px}
+.card h4{margin:7px 0 5px;font-size:15.5px;color:var(--acc)}
+.card p{margin:0;color:var(--dim);font-size:13.5px}
+
+ol.steps{list-style:none;counter-reset:st;padding:0;margin:8px 0 0}
+ol.steps>li{counter-increment:st;position:relative;padding:0 0 20px 48px}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:2px;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:14px}
+ol.steps>li::after{content:"";position:absolute;left:14px;top:36px;bottom:4px;width:2px;background:var(--line)}
+ol.steps>li:last-child{padding-bottom:2px}
+ol.steps>li:last-child::after{display:none}
+.step-title{display:block;font-weight:700;margin-bottom:3px}
+ol.steps p{margin:0}
+
+.note,.warning{border-radius:8px;padding:12px 16px;margin:14px 0;font-size:14.5px}
+.note{background:var(--accbg);border:1px solid #bfdbfe}
+.warning{background:var(--warnbg);border:1px solid var(--warnline)}
+
+table.data-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px}
+.data-table th{background:var(--accbg);color:#1d4ed8;text-align:left}
+.data-table th,.data-table td{border:1px solid var(--line);padding:8px 13px}
+.data-table tr:nth-child(even) td{background:#fbfdff}
+.data-table td code{white-space:nowrap}
+
+details.faq{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:10px 16px;margin:9px 0}
+details.faq summary{cursor:pointer;font-weight:600}
+details.faq[open]{border-color:var(--acc)}
+details.faq .answer{color:var(--dim);padding-top:7px}
+
+.shot{border:2px dashed var(--line2);border-radius:8px;padding:26px;text-align:center;color:var(--dim);font-size:14px;margin:13px 0}
+.badge{display:inline-block;border-radius:4px;padding:1px 10px;font-size:12.5px;margin-right:6px;color:var(--acc);border:1px solid var(--acc)}
+.badge.ok{color:var(--ok);border-color:var(--ok)}
+.badge.warn{color:var(--warn);border-color:var(--warn)}
+.empty{border:1px dashed var(--line2);border-radius:10px;padding:44px;text-align:center;color:var(--dim);margin:20px 0}
+
+.foot{border-top:1px solid var(--line);color:var(--dim);text-align:center;padding:20px;font-size:13px;background:var(--bg2)}
+@media (max-width:820px){.toc{display:none}.layout{padding-top:18px}.hero h1{font-size:24px}}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="hero-in">
+  <span class="kind">服主教程</span>
+  <h1>禁止使用转盘（TryMultiUse） <span class="accent">配置与部署指南</span></h1>
+  <p class="sub">面向服主：功能说明、安装部署、配置文件详解、重载命令用法与疑难排查</p>
+</div></header>
+
+<div class="toolbar"><div class="toolbar-in">
+  <input id="searchInput" type="search" placeholder="搜索配置项、命令、问题…">
+  <div class="chips">
+    <button class="chip on" data-cat="all">全部</button>
+    <button class="chip" data-cat="deploy">部署</button>
+    <button class="chip" data-cat="basic">基础配置</button>
+    <button class="chip" data-cat="cmd">命令详解</button>
+    <button class="chip" data-cat="faq">疑难解答</button>
+  </div>
+  <span class="count" id="resultCount"></span>
+</div></div>
+
+<div class="layout">
+<nav class="toc">
+  <div class="toc-title">目录</div>
+  <a href="#u1">软件总览</a>
+  <a href="#u2">环境要求</a>
+  <a href="#u3">部署安装</a>
+  <a href="#u4">配置文件说明</a>
+  <a href="#u5">配置总表</a>
+  <a href="#u5b">ConsoleEncoding 控制台编码</a>
+  <a href="#u6">BlockRules 拦截规则与气泡提示</a>
+  <a href="#u7">命令用法详解</a>
+  <a href="#u7b">Reload 命令详解</a>
+  <a href="#u8">常见问题</a>
+  <a href="#u9">技术支持</a>
+</nav>
+
+<main class="content">
+
+<section class="unit" id="u1" data-cat="basic">
+  <div class="group">第一章 · 软件总览</div>
+  <h2>软件总览</h2>
+  <p class="lead">「禁止使用转盘（TryMultiUse）」是一个方舟生存进化服务端 ArkApi 插件，当前版本 1.0。它在服务器引擎层接管「多选项交互」入口，玩家再对幸运转盘类物品点下选项时，服务器直接不予响应——转盘玩法即刻全服禁用，无需改模组、无需换地图。</p>
+  <div class="card-grid">
+    <div class="unit card" data-cat="basic"><div class="icon">🎡</div><h4>转盘交互拦截</h4><p>在引擎层接管多选项交互，转盘选项一点即拦，全服立即生效。</p></div>
+    <div class="unit card" data-cat="basic"><div class="icon">🎯</div><h4>多规则自由配置</h4><p>拦截规则写在 config.json 里，想加几条加几条，按索引或蓝图精确匹配。</p></div>
+    <div class="unit card" data-cat="basic"><div class="icon">🛡️</div><h4>其余交互零影响</h4><p>不命中规则的交互原样放行，正常玩法不受干扰。</p></div>
+    <div class="unit card" data-cat="basic"><div class="icon">⚙️</div><h4>JSON 配置文件</h4><p>插件目录下 config.json 集中管理配置，启动时自动读取。</p></div>
+    <div class="unit card" data-cat="cmd"><div class="icon">🔄</div><h4>配置热重载命令</h4><p>控制台 / RCON 执行 TryMultiUse.Reload，免重启刷新配置。</p></div>
+    <div class="unit card" data-cat="basic"><div class="icon">📝</div><h4>中文日志自适应编码</h4><p>控制台中文输出自动适配 ArkApi 3.54 / 3.55 编码，不乱码。</p></div>
+  </div>
+  <div class="note">拦截规则完全由 <code>config.json</code> 的 <code>BlockRules</code> 数组配置（依据源码 <code>Main.cpp</code> 的 <code>Hook_AActor_TryMultiUse</code>：按配置的规则表顺序匹配，第一条命中即拦截并弹该条自己的气泡提示）。规则怎么加、提示怎么配见第四章 BlockRules 小节；<b>未配置或列表为空时不拦截任何交互</b>。</div>
+</section>
+
+<section class="unit" id="u2" data-cat="deploy">
+  <div class="group">第二章 · 环境要求</div>
+  <h2>环境要求</h2>
+  <table class="data-table">
+    <tr><th style="width:160px">项目</th><th>要求</th></tr>
+    <tr><td>操作系统</td><td>Windows（服务端为 Windows 版方舟生存进化服务器）</td></tr>
+    <tr><td>服务端插件框架</td><td>ArkApi，最低版本 3.5（依据 <code>Output/PluginInfo.json</code> 的 <code>MinApiVersion</code> 字段）</td></tr>
+    <tr><td>运行依赖</td><td>无额外运行库、无数据库、无网络服务依赖（依据源码：插件仅挂钩引擎交互函数，无任何数据库调用，配置文件中也没有数据库小节）</td></tr>
+    <tr><td>编译环境（开发者）</td><td>Visual Studio 2019 v142 或更高版本工具集、MSBuild；需先设置环境变量 <code>ASE_API</code> 指向 ServerAPI 目录（工程脚本 <code>环境变量.bat</code> 负责设置）</td></tr>
+  </table>
+</section>
+
+<section class="unit" id="u3" data-cat="deploy">
+  <div class="group">第三章 · 部署安装</div>
+  <h2>部署安装</h2>
+  <p class="lead">以下为拿到编译好的插件后在服务器上的部署步骤。</p>
+  <ol class="steps">
+    <li><span class="step-title">确认服务器已安装 ArkApi</span><p>检查服务器目录 <code>ShooterGame\Binaries\Win64\ArkApi\</code> 是否存在 → 存在则继续；不存在请先安装 ArkApi（最低 3.5）。</p></li>
+    <li><span class="step-title">复制插件文件</span><p>把 <code>PluginInfo.json</code>、<code>config.json</code>、<code>TryMultiUse.dll</code> 复制到 <code>ShooterGame\Binaries\Win64\ArkApi\Plugins\TryMultiUse\</code> → 目录不存在时先创建（工程自带的 <code>一键安装.bat</code> 会自动完成复制与建目录，并可选择同时部署停用副本 <code>TryMultiUse.dll.arkapi</code>）。</p></li>
+    <li><span class="step-title">检查配置文件</span><p>打开插件目录下的 <code>config.json</code>，确认内容为合法 JSON → 配置详解见第四章。</p></li>
+    <li><span class="step-title">重启服务器</span><p>启动方舟服务器 → 服务器控制台出现「先锋.禁止使用转盘(1.0) 先锋方舟服主群:138535385 作者QQ:711919」横幅日志即表示插件加载成功（源码 <code>Main.cpp</code> 的 <code>Load()</code>）；随后输出「已加载 N 条拦截规则」（出厂预置为 2 条），这是拦截规则加载正常的标志；测试版还会输出一行「调试输出,测试编码」自检，这行中文显示正常就说明控制台编码匹配。</p></li>
+    <li><span class="step-title">验证插件已生效</span><p>进服对转盘物品使用转盘选项 → 选项无反应即拦截生效；其余交互（开门、开箱等）正常放行。</p></li>
+    <li><span class="step-title">验证重载命令</span><p>在服务器控制台或 RCON 执行 <code>TryMultiUse.Reload</code> → 返回 <code>Reloaded config</code> 表示命令可用。</p></li>
+  </ol>
+  <div class="warning">若 <code>config.json</code> 缺失或不是合法 JSON，插件加载时会抛出错误 <code>Can't open config.json</code>（源码 <code>Main.cpp</code> 的 <code>ReadConfig()</code>），插件将无法正常启动。部署前务必确认配置文件存在且格式正确。</div>
+  <div class="note">编译产物位于工程 <code>Output\TryMultiUse\</code> 目录；首次使用编译脚本前需先运行 <code>环境变量.bat</code> 设置 <code>ASE_API</code>（用户级永久环境变量，重启命令行 / VS 后生效）。</div>
+</section>
+
+<section class="unit" id="u4" data-cat="basic">
+  <div class="group">第四章 · 配置详解</div>
+  <h2>配置文件说明</h2>
+  <p>插件启动时读取服务器目录下的 <code>ArkApi\Plugins\TryMultiUse\config.json</code>（源码 <code>Main.cpp</code> 的 <code>ReadConfig()</code>）。</p>
+  <pre><code>ShooterGame\Binaries\Win64\ArkApi\Plugins\TryMultiUse\
+├── TryMultiUse.dll
+├── TryMultiUse.pdb
+├── PluginInfo.json
+└── config.json   ← 插件配置</code></pre>
+  <div class="note">JSON 里逗号、引号一个都不能少。建议用带 JSON 校验的编辑器（如 VS Code）修改；改前先备份。文件编码为 UTF-8。修改后可在控制台 / RCON 执行 <code>TryMultiUse.Reload</code> 热重载，无需重启服务器。</div>
+</section>
+
+<section class="unit" id="u5" data-cat="basic">
+  <div class="group">第四章 · 配置详解</div>
+  <h2>配置总表</h2>
+  <p class="lead">本表列出 <code>config.json</code> 的全部键（依据 <code>Output/config.json</code>），均被代码实际读取——本插件没有无用的占位键。规则字段（UseIndex / Blueprint / Tip.*）写在 <code>BlockRules</code> 数组的每条规则里。</p>
+  <table class="data-table">
+    <tr><th style="width:210px">配置键</th><th style="width:110px">所在小节</th><th style="width:130px">兜底值</th><th>说明</th></tr>
+    <tr><td><code>ConsoleEncoding</code></td><td>顶层</td><td><code>auto</code>（缺失/非法时自动）</td><td>控制台输出编码：<code>auto</code> 按服务器控制台代码页自动选择，<code>gbk</code> / <code>utf8</code> 强制指定；详见下方配置项详解</td></tr>
+    <tr><td><code>BlockRules</code></td><td>顶层</td><td>空 = 不拦截</td><td>拦截规则数组，每条 = 条件 + 自己的提示；详见下方 BlockRules 小节</td></tr>
+    <tr><td><code>规则.UseIndex</code></td><td><code>BlockRules[]</code></td><td>不启用该条件</td><td>选项索引条件（整数）；与 Blueprint 同时写为"与"关系</td></tr>
+    <tr><td><code>规则.Blueprint</code></td><td><code>BlockRules[]</code></td><td>不启用该条件</td><td>蓝图路径条件（完整路径精确匹配）；测试版调试输出的「蓝图:」行可直接复制使用</td></tr>
+    <tr><td><code>规则.Tip.Enabled</code></td><td><code>BlockRules[].Tip</code></td><td><code>true</code></td><td>该规则命中时是否弹提示；<code>false</code> 静默拦截</td></tr>
+    <tr><td><code>规则.Tip.Message</code></td><td><code>BlockRules[].Tip</code></td><td><code>转盘已被服务器禁用</code></td><td>该规则的提示文案，支持中文</td></tr>
+    <tr><td><code>规则.Tip.Color</code></td><td><code>BlockRules[].Tip</code></td><td><code>red</code></td><td>该规则的提示颜色（8 色，支持中文别名，不区分大小写）</td></tr>
+    <tr><td><code>规则.Tip.Scale</code></td><td><code>BlockRules[].Tip</code></td><td><code>1.0</code></td><td>该规则的文字大小，有效范围 0.5~5.0，超范围钳到边界</td></tr>
+    <tr><td><code>规则.Tip.Time</code></td><td><code>BlockRules[].Tip</code></td><td><code>3.0</code></td><td>该规则的显示秒数，有效范围 0.5~60.0，超范围钳到边界</td></tr>
+  </table>
+  <div class="note">Tip 小节可整个省略或只写部分字段，缺的按兜底值生效；条件两样都不写的规则会被跳过并在控制台黄色警告。插件不使用授权与数据库，配置文件中不含相关字段。</div>
+</section>
+
+<section class="unit" id="u5b" data-cat="basic">
+  <div class="group">第四章 · 配置详解</div>
+  <h2>ConsoleEncoding 控制台编码</h2>
+  <p><b>什么意思：</b>控制插件往服务器控制台输出文字时用的编码。不同版本 ArkApi 的服务器控制台编码不同（3.54 为 GBK/ANSI，3.55 为 UTF-8），编码不匹配时控制台中文会乱码。本插件输出前会按这个配置决定是否把 UTF-8 转成 GBK（<code>Main.cpp</code> 的 <code>应用控制台编码配置</code>，插件日志模块 <code>h/日志.h</code> 的自动输出系列同受其控制）。</p>
+  <p><b>兜底值：</b><span class="badge">auto</span>（配置缺失或值非法时都按 <code>auto</code> 处理，非法值会在控制台提示一行黄色警告）</p>
+  <pre><code>{
+  "ConsoleEncoding": "auto"
+}</code></pre>
+  <p><b>怎么修改：</b>可选值共三个（大小写不限）：</p>
+  <table class="data-table">
+    <tr><th style="width:110px">取值</th><th>效果</th></tr>
+    <tr><td><code>auto</code></td><td>自动探测：控制台代码页为 936 时转 GBK 输出，否则按 UTF-8 原样输出。3.54 / 3.55 服务器都不用改配置，推荐保持默认</td></tr>
+    <tr><td><code>gbk</code></td><td>强制输出前转 GBK（等同旧版行为；写 <code>ansi</code> 也可以）</td></tr>
+    <tr><td><code>utf8</code></td><td>强制 UTF-8 原样输出（写 <code>utf-8</code> 也可以）</td></tr>
+  </table>
+  <div class="note">改完不用重启：控制台 / RCON 执行 <code>TryMultiUse.Reload</code> 即可热生效（编码解析在每次读取配置时进行）。</div>
+</section>
+
+<section class="unit" id="u6" data-cat="basic">
+  <div class="group">第四章 · 配置详解</div>
+  <h2>BlockRules 拦截规则与气泡提示</h2>
+  <p><b>什么意思：</b>拦截规则全部写在 <code>BlockRules</code> 数组里，想禁几个交互就写几条规则；每条规则带<b>自己的</b>气泡提示——文案、颜色、大小、时长各是各的。命中任一规则即拦截该次交互并弹该规则的提示，不再让玩家误以为卡 bug（源码 <code>Main.cpp</code> 的 <code>Hook_AActor_TryMultiUse</code> + <code>应用拦截规则配置</code>，提示经 ArkApi 的 SendNotification 发送）。</p>
+  <p><b>规则怎么匹配：</b></p>
+  <ul>
+    <li><b>规则内是"与"</b>：<code>UseIndex</code> 和 <code>Blueprint</code> 都写 = 两者同时满足才拦；只写一个 = 单条件匹配。</li>
+    <li><b>规则间是"或"</b>：任何一条命中就拦截；多条同时命中按数组顺序取<b>第一条</b>，弹它的提示。</li>
+    <li><code>Blueprint</code> 为完整蓝图路径<b>精确匹配</b>——测试版插件每次交互会在控制台输出「蓝图:」行，直接复制过来用即可。</li>
+    <li>两条条件都不写的规则无效，加载时跳过并黄色警告；<code>BlockRules</code> 未配置 / 不是数组 / 为空 = 不拦截任何交互（控制台有黄色提示）。</li>
+  </ul>
+  <p><b>出厂预置</b>（即默认的"禁止使用转盘"两条规则，可直接在其上加改）：</p>
+  <pre><code>{
+  "BlockRules": [
+    {
+      "UseIndex": 52126,
+      "Tip": { "Enabled": true, "Message": "转盘已被服务器禁用", "Color": "red", "Scale": 1.0, "Time": 3.0 }
+    },
+    {
+      "Blueprint": "Blueprint'/Game/Mods/TXWS/Item/LXXXXXXX.LXXXXXXX'",
+      "Tip": { "Enabled": true, "Message": "转盘已被服务器禁用", "Color": "red", "Scale": 1.0, "Time": 3.0 }
+    }
+  ]
+}</code></pre>
+  <p><b>如何新增拦截规则（照着做就行）：</b></p>
+  <ol class="steps">
+    <li><span class="step-title">拿到要拦的值</span><p>部署测试版插件 → 进服对要禁的交互操作一次 → 控制台输出「TryMultiUse:数字」（填 <code>UseIndex</code>）和「蓝图:路径」（填 <code>Blueprint</code>）两行，复制你要用的那个值。</p></li>
+    <li><span class="step-title">在数组末尾加一条规则</span><p>打开 <code>config.json</code>，在 <code>BlockRules</code> 数组最后一条 <code>}</code> 后面加一个逗号，另起一行粘贴新规则——用哪种条件就写哪个键，另一个不用写。</p></li>
+    <li><span class="step-title">按需配提示</span><p>想自定义提示就写 <code>Tip</code> 小节（文案 / 颜色 / 大小 / 时长见下方字段表）；整个 <code>Tip</code> 不写就用默认提示；想拦但<b>不</b>提示就写 <code>"Enabled": false</code>。</p></li>
+    <li><span class="step-title">热重载生效</span><p>控制台 / RCON 执行 <code>TryMultiUse.Reload</code> → 看到「已加载 N 条拦截规则」且数量比之前多一条，即加载成功。</p></li>
+    <li><span class="step-title">进服验证</span><p>对目标交互再操作一次 → 被拦（配了提示的弹出对应提示）即成功；没拦到就对照调试输出的值检查拼写是否一致。</p></li>
+  </ol>
+  <p><b>多条规则示例</b>（3 个蓝图 + 2 个索引混着加，照抄后把值换成自己的即可）：</p>
+  <pre><code>{
+  "BlockRules": [
+    { "UseIndex": 52126, "Tip": { "Message": "转盘已被服务器禁用" } },
+    { "UseIndex": 52127, "Tip": { "Message": "抽奖已关闭", "Color": "yellow" } },
+    { "Blueprint": "Blueprint'/Game/Mods/TXWS/Item/LXXXXXXX.LXXXXXXX'" },
+    { "Blueprint": "Blueprint'/Game/Mods/其他模组/物品A.物品A'", "Tip": { "Message": "该物品已停用", "Scale": 1.5, "Time": 5.0 } },
+    { "Blueprint": "Blueprint'/Game/Mods/其他模组/物品B.物品B'", "Tip": { "Enabled": false } }
+  ]
+}</code></pre>
+  <div class="note">规则数量<b>没有上限</b>：同种条件重复加、索引与蓝图混着加都行，每条规则独立匹配、各弹各的提示（多条同时命中按数组顺序取第一条）。要拦同一个物品的多个选项，就多写几条索引规则。</div>
+  <p><b>Tip 字段（每条规则各自的提示，可省略任意项）：</b></p>
+  <table class="data-table">
+    <tr><th style="width:190px">配置键</th><th style="width:200px">可选值</th><th>效果</th></tr>
+    <tr><td><code>Tip.Enabled</code></td><td><code>true</code> / <code>false</code></td><td><code>true</code> 该规则命中时弹提示；<code>false</code> 静默拦截（无任何提示）</td></tr>
+    <tr><td><code>Tip.Message</code></td><td>任意非空文本</td><td>该规则的提示文案，支持中文；留空或缺失时用默认文案</td></tr>
+    <tr><td><code>Tip.Color</code></td><td>8 个颜色名（见下表）</td><td>该规则的提示文字颜色；不认识的名字回落红色并在控制台警告</td></tr>
+    <tr><td><code>Tip.Scale</code></td><td>0.5 ~ 5.0（数字）</td><td>文字大小，默认 1.0；超范围自动钳到边界（写 9 生效 5.0）</td></tr>
+    <tr><td><code>Tip.Time</code></td><td>0.5 ~ 60.0（秒）</td><td>显示时长，默认 3.0 秒；超范围自动钳到边界</td></tr>
+  </table>
+  <p><b>Color 颜色名对照（不区分大小写，中英文均可）：</b></p>
+  <table class="data-table">
+    <tr><th>英文</th><th>中文别名</th><th>颜色</th><th>英文</th><th>中文别名</th><th>颜色</th></tr>
+    <tr><td><code>red</code></td><td>红 / 红色</td><td>红</td><td><code>white</code></td><td>白 / 白色</td><td>白</td></tr>
+    <tr><td><code>green</code></td><td>绿 / 绿色</td><td>绿</td><td><code>black</code></td><td>黑 / 黑色</td><td>黑</td></tr>
+    <tr><td><code>blue</code></td><td>蓝 / 蓝色</td><td>蓝</td><td><code>cyan</code></td><td>青 / 青色</td><td>青</td></tr>
+    <tr><td><code>yellow</code></td><td>黄 / 黄色</td><td>黄</td><td><code>purple</code></td><td>紫 / 紫色</td><td>紫红</td></tr>
+  </table>
+  <div class="note">改完不用重启：控制台 / RCON 执行 <code>TryMultiUse.Reload</code> 即可热生效，加载成功会输出「已加载 N 条拦截规则」。提示每次命中都会弹出，文案别写太长（游戏内显示空间有限）；黑色文字在深色背景上不显眼，慎用。</div>
+</section>
+
+<section class="unit" id="u7" data-cat="cmd">
+  <div class="group">第五章 · 命令用法详解</div>
+  <h2>命令总表</h2>
+  <p class="lead">命令在服务器控制台或 RCON 中输入。当前版本没有玩家聊天命令。</p>
+  <table class="data-table">
+    <tr><th>命令</th><th style="width:110px">权限</th><th>作用</th><th>改名配置键</th></tr>
+    <tr><td><code>TryMultiUse.Reload</code></td><td>管理员（控制台 / RCON）</td><td>重新读取 config.json，免重启刷新配置</td><td>无（命令名由插件英文名决定）</td></tr>
+  </table>
+  <div class="note">符号约定：命令格式里的 <code>[方括号]</code> 表示可选参数，只是标注——<b>实际输入时不要输入方括号</b>。本命令无参数，下方示例都是可直接照抄的真实输入。</div>
+</section>
+
+<section class="unit" id="u7b" data-cat="cmd">
+  <div class="group">第五章 · 命令用法详解</div>
+  <h2>TryMultiUse.Reload 命令详解</h2>
+  <p><b>作用：</b>让插件重新读取 <code>config.json</code>——拦截规则、各规则的气泡提示、控制台编码一并重新加载。改完配置不想重启服务器时用它，立即生效。</p>
+  <pre><code>TryMultiUse.Reload</code></pre>
+  <table class="data-table">
+    <tr><th>参数</th><th style="width:60px">必填</th><th style="width:110px">缺省值</th><th>说明</th></tr>
+    <tr><td>无参数</td><td>—</td><td>—</td><td>本命令不带任何参数（源码 <code>Main.cpp</code> 的 <code>ReloadConfig</code> / <code>ReloadConfigRcon</code>）</td></tr>
+  </table>
+  <p>示例一：<code>TryMultiUse.Reload</code>（在服务器控制台直接输入：插件立即重新读取配置，成功时绿色提示）</p>
+  <p>示例二：<code>TryMultiUse.Reload</code>（通过 RCON 工具发送：返回同样的处理结果，适合远程管理服务器时改配置）</p>
+  <p><b>反馈：</b>成功时绿色提示 <code>Reloaded config</code>，控制台同时输出「已加载 N 条拦截规则」（规则有问题时是对应的黄色警告），可用它确认规则按预期加载；配置文件缺失或 JSON 损坏时红色提示 <code>Failed to reload config</code>，错误详情写入日志，<b>此前的旧规则继续生效</b>不受影响（源码 <code>ReadConfig</code> 解析失败即中止，规则表不清空）。只能在控制台 / RCON 使用，不是游戏内聊天命令。</p>
+</section>
+
+<section class="unit" id="u8" data-cat="faq">
+  <div class="group">第六章 · 常见问题</div>
+  <h2>常见问题</h2>
+  <details class="faq"><summary>控制台中文乱码（方块/问号）？</summary><div class="answer">先试这个：看插件启动时自检输出的「调试输出,测试编码」行——这行中文显示正常就说明编码匹配，无需处理；若这行乱码，保持 <code>ConsoleEncoding</code> 为 <code>auto</code>（插件会按服务器控制台代码页自动选择编码）并执行 <code>TryMultiUse.Reload</code>；仍乱码再按 ArkApi 版本显式指定——3.54 服务器设 <code>gbk</code>、3.55 服务器设 <code>utf8</code>。</div></details>
+  <details class="faq"><summary>插件没加载，控制台提示 Can't open config.json？</summary><div class="answer">先试这个：检查 <code>ArkApi\Plugins\TryMultiUse\config.json</code> 是否存在、文件名拼写是否正确；存在则用 JSON 校验工具检查格式（多逗号、缺引号都会导致解析失败）。</div></details>
+  <details class="faq"><summary>改了 config.json 但没生效？</summary><div class="answer">先试这个：在控制台或 RCON 执行 <code>TryMultiUse.Reload</code> 热重载；若提示 <code>Failed to reload config</code> 说明新配置格式有错，按报错修正后重试。仍不生效则重启服务器。</div></details>
+  <details class="faq"><summary>转盘还能用，没被拦截？</summary><div class="answer">先试这个：确认插件已加载（控制台有「先锋.禁止使用转盘(1.0)」横幅），再看启动 / 重载时输出的「已加载 N 条拦截规则」是否大于 0。拦截范围由 <code>BlockRules</code> 配置决定——你服上的转盘若来自其他模组/其他物品，用测试版插件对它交互一次，把控制台「TryMultiUse:」行里的数字填进 <code>UseIndex</code>（或「蓝图:」行的路径填进 <code>Blueprint</code>）加一条规则，执行 <code>TryMultiUse.Reload</code> 即可，详见第四章。</div></details>
+  <details class="faq"><summary>会不会误伤其他交互（开门、开箱、修理等）？</summary><div class="answer">不会。插件只在上面的两条拦截规则命中时拦截，其余交互原样交给游戏原函数处理（源码 <code>Hook_AActor_TryMultiUse</code>：未命中即调用原函数）。部署后建议抽查几项常用交互确认。</div></details>
+  <details class="faq"><summary>怎么临时停用插件？</summary><div class="answer">把插件目录下的 <code>TryMultiUse.dll</code> 改名为 <code>TryMultiUse.dll.arkapi</code>（ArkApi 不加载该后缀），重启服务器即可停用；改回 <code>.dll</code> 恢复。工程的 <code>一键安装.bat</code> 也支持部署停用副本。</div></details>
+  <details class="faq"><summary>怎么关掉 / 修改拦截时给玩家的提示？</summary><div class="answer">先试这个：提示是<b>每条规则各自的</b>——改 <code>config.json</code> 里对应规则内的 <code>Tip</code> 小节：<code>Enabled</code> 改 <code>false</code> 静默拦截，<code>Message</code> 改文案，<code>Color</code> / <code>Scale</code> / <code>Time</code> 调颜色、大小、时长；然后执行 <code>TryMultiUse.Reload</code> 热生效，详见第四章 BlockRules 小节。</div></details>
+  <details class="faq"><summary>配置文件放哪里？改坏了怎么恢复？</summary><div class="answer">配置固定在 <code>ShooterGame\Binaries\Win64\ArkApi\Plugins\TryMultiUse\config.json</code>，与 <code>TryMultiUse.dll</code> 同目录。改坏了先用备份覆盖回去；没有备份时，参照本教程第四章的示例片段重建，保证 JSON 语法完整（逗号、引号齐全）。</div></details>
+  <details class="faq"><summary>测试版控制台一直刷 TryMultiUse:数字 / 蓝图:路径？</summary><div class="answer">这是测试版的调试输出：每次玩家触发多选项交互都会打印选项索引与物品蓝图（源码 <code>Hook_AActor_TryMultiUse</code> 的调试分支），用于排查拦截规则——把「TryMultiUse:」的数字填进 <code>UseIndex</code>、「蓝图:」的路径填进 <code>Blueprint</code> 就是现成的规则条件。正式版自动关闭这类输出，不影响功能。</div></details>
+  <details class="faq"><summary>旧版配置（BlockTip / 写死的规则）怎么升级？</summary><div class="answer">旧版 <code>BlockTip</code> 小节已被 <code>BlockRules</code> 数组取代（旧字段会被忽略）。用本教程第四章的出厂预置直接覆盖 <code>BlockRules</code> 即可，原有的两条禁转盘规则已在预置里；自己加过的提示样式照着搬进对应规则的 <code>Tip</code> 小节。</div></details>
+</section>
+
+<section class="unit" id="u9" data-cat="faq">
+  <div class="group">第七章 · 技术支持</div>
+  <h2>技术支持</h2>
+  <div class="note">联系方式：作者 QQ 711919；先锋方舟服主群 138535385（依据插件启动横幅与 <code>Output/PluginInfo.json</code>）。反馈问题时建议附上：服务器控制台的报错日志、插件目录的 <code>config.json</code> 内容（隐去密码）、所用插件版本号（见启动横幅或 <code>PluginInfo.json</code>）。</div>
+</section>
+
+<div class="empty hide" id="emptyState">没有匹配的内容，换个关键词或分类试试</div>
+</main>
+</div>
+
+<footer class="foot">
+  禁止使用转盘（TryMultiUse） · 服主教程 · 2026-09
+</footer>
+
+<script>
+(function(){
+var inp=document.getElementById('searchInput');
+var chips=[].slice.call(document.querySelectorAll('.chip'));
+var units=[].slice.call(document.querySelectorAll('.unit'));
+var empty=document.getElementById('emptyState');
+var cnt=document.getElementById('resultCount');
+var cat='all';
+function go(){
+  var q=(inp.value||'').trim().toLowerCase(),n=0;
+  units.forEach(function(u){
+    var okC=(cat=='all'||u.getAttribute('data-cat')==cat);
+    var t=(u.textContent||'').toLowerCase()+(u.getAttribute('data-kw')||'');
+    var okQ=!q||t.indexOf(q)>-1;
+    var s=okC&&okQ;u.classList.toggle('hide',!s);if(s)n++;
+  });
+  [].forEach.call(document.querySelectorAll('.toc a'),function(a){
+    var el=document.getElementById(a.getAttribute('href').slice(1));
+    a.classList.toggle('dim',!(el&&!el.classList.contains('hide')));
+  });
+  empty.classList.toggle('hide',n>0);
+  cnt.textContent=n+' / '+units.length+' 条';
+}
+chips.forEach(function(c){c.addEventListener('click',function(){
+  chips.forEach(function(x){x.classList.remove('on')});c.classList.add('on');
+  cat=c.getAttribute('data-cat');go();
+})});
+inp.addEventListener('input',go);go();
+})();
+</script>
+
+</body>
+</html>
