@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>禁止使用转盘（TryMultiUse） 软件简介</title>
+<style>
+/* ============================================================
+   样式区：禁止修改！
+   本模板是 xiangmujiaocheng 技能的「软件简介」专属模板（清爽文档蓝）。
+   修改此区会破坏所有项目软件简介的视觉统一。
+   ============================================================ */
+:root{--acc:#2563eb;--accbg:#eff6ff;--line:#e2e8f0;--line2:#cbd5e1;--text:#1e293b;--dim:#64748b;--bg2:#f8fafc;--ok:#16a34a;--warn:#d97706;--warnbg:#fffbeb;--warnline:#fde68a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:15.5px/1.85 "Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;color:var(--text);background:#fff}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+code{background:var(--accbg);color:#1d4ed8;border-radius:4px;padding:1px 7px;font-family:Consolas,"Courier New",monospace;font-size:13.5px}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:13px 16px;overflow:auto}
+pre code{background:none;color:#0f172a;padding:0}
+.hide{display:none!important}
+
+.hero{background:linear-gradient(180deg,#eef5ff 0%,#ffffff 100%);border-bottom:1px solid var(--line);padding:44px 20px 32px;text-align:center}
+.kind{display:inline-block;background:var(--acc);color:#fff;border-radius:4px;font-size:13px;padding:2px 12px;letter-spacing:2px}
+.hero h1{margin:14px 0 8px;font-size:34px}
+.hero h1 .accent{color:var(--acc)}
+.hero .sub{color:var(--dim);margin:0 auto;max-width:640px;font-size:15.5px}
+
+.toolbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.toolbar-in{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 20px}
+#searchInput{flex:1 1 240px;border:1px solid var(--line2);border-radius:8px;padding:8px 14px;font-size:14.5px;outline:none;background:var(--bg2)}
+#searchInput:focus{border-color:var(--acc);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line2);background:#fff;color:var(--dim);border-radius:999px;padding:5px 15px;font-size:13.5px;cursor:pointer}
+.chip:hover{border-color:var(--acc);color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.count{color:var(--dim);font-size:13px;white-space:nowrap}
+
+.content{max-width:980px;margin:0 auto;padding:30px 20px 70px}
+
+.unit{margin:0 0 38px}
+.group{font-size:12.5px;color:var(--acc);letter-spacing:2px;margin-bottom:4px}
+.unit>h2{margin:0 0 10px;font-size:22px;border-left:4px solid var(--acc);padding-left:12px}
+.lead{color:var(--dim);margin:0 0 14px;font-size:14.5px}
+.unit h3{font-size:16.5px;margin:20px 0 8px}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:16px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:15px 17px;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:.15s}
+.card:hover{border-color:var(--acc);box-shadow:0 4px 14px rgba(37,99,235,.12)}
+.card .icon{font-size:22px}
+.card h4{margin:7px 0 5px;font-size:15.5px;color:var(--acc)}
+.card p{margin:0;color:var(--dim);font-size:13.5px}
+
+.note,.warning{border-radius:8px;padding:12px 16px;margin:14px 0;font-size:14.5px}
+.note{background:var(--accbg);border:1px solid #bfdbfe}
+.warning{background:var(--warnbg);border:1px solid var(--warnline)}
+
+table.data-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px}
+.data-table th{background:var(--accbg);color:#1d4ed8;text-align:left}
+.data-table th,.data-table td{border:1px solid var(--line);padding:8px 13px}
+.data-table tr:nth-child(even) td{background:#fbfdff}
+
+details.faq{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:10px 16px;margin:9px 0}
+details.faq summary{cursor:pointer;font-weight:600}
+details.faq[open]{border-color:var(--acc)}
+details.faq .answer{color:var(--dim);padding-top:7px}
+
+.shot{border:2px dashed var(--line2);border-radius:8px;padding:26px;text-align:center;color:var(--dim);font-size:14px;margin:13px 0}
+.badge{display:inline-block;border-radius:4px;padding:1px 10px;font-size:12.5px;margin-right:6px;color:var(--acc);border:1px solid var(--acc)}
+.badge.ok{color:var(--ok);border-color:var(--ok)}
+.badge.warn{color:var(--warn);border-color:var(--warn)}
+.empty{border:1px dashed var(--line2);border-radius:10px;padding:44px;text-align:center;color:var(--dim);margin:20px 0}
+
+.foot{border-top:1px solid var(--line);color:var(--dim);text-align:center;padding:20px;font-size:13px;background:var(--bg2)}
+@media (max-width:640px){.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="kind">软件简介</span>
+  <h1>禁止使用转盘 <span class="accent">转盘说关就关</span></h1>
+  <p class="sub">装上即全服禁用幸运转盘——不改模组、不换地图、其余玩法零影响，你配置一次，它天天值守。</p>
+</header>
+
+<div class="toolbar"><div class="toolbar-in">
+  <input id="searchInput" type="search" placeholder="搜索功能…">
+  <div class="chips">
+    <button class="chip on" data-cat="all">全部</button>
+    <button class="chip" data-cat="core">核心卖点</button>
+    <button class="chip" data-cat="adv">特色功能</button>
+    <button class="chip" data-cat="env">适配与购买</button>
+  </div>
+  <span class="count" id="resultCount"></span>
+</div></div>
+
+<main class="content">
+
+<!-- 01 软件定位 -->
+<section class="unit" id="s1" data-cat="core">
+  <div class="group">01 · 软件定位</div>
+  <h2>软件定位</h2>
+  <p>服规想禁转盘，办法无非那么几种：群里发公告——没人看；人工盯着踢人——夜里没人盯，照样有人转；动模组删物品——工程量大，还容易牵连别的功能。转盘一开一转之间，服规成了摆设。</p>
+  <p>「禁止使用转盘」把这件事交给服务器本身：它在引擎层接管玩家的多选项交互，玩家对转盘点下选项的那一刻，服务器直接不作响应。装上即生效、全服统一、无人值守——服务器开着，你的服规就在岗。</p>
+</section>
+
+<!-- 02 适配环境 -->
+<section class="unit" id="s2" data-cat="env">
+  <div class="group">02 · 适配环境</div>
+  <h2>适配环境</h2>
+  <table class="data-table">
+    <tr><th style="width:150px">项目</th><th>要求</th></tr>
+    <tr><td>操作系统</td><td>Windows（方舟生存进化 Windows 版服务端）</td></tr>
+    <tr><td>服务端插件框架</td><td>ArkApi，最低版本 3.5（依据 <code>PluginInfo.json</code> 的 <code>MinApiVersion</code> 字段）</td></tr>
+    <tr><td>运行依赖</td><td>无数据库、无额外运行库、无网络服务依赖（插件仅挂钩引擎交互函数，源码可查）</td></tr>
+    <tr><td>安装方式</td><td>复制 3 个文件到插件目录，重启服务器即用</td></tr>
+  </table>
+</section>
+
+<!-- 03 功能展示·总览 -->
+<div class="card-grid">
+  <div class="unit card" data-cat="core"><div class="icon">🎡</div><h4>一键禁用转盘</h4><p>转盘选项点下去毫无响应，全服即刻生效，无人值守。</p></div>
+  <div class="unit card" data-cat="core"><div class="icon">🎯</div><h4>多规则自由配置</h4><p>拦截规则想加几条加几条，索引、蓝图都能配，各配各的提示。</p></div>
+  <div class="unit card" data-cat="adv"><div class="icon">🛡️</div><h4>其余玩法零误伤</h4><p>不命中规则的交互原样放行，开门开箱修理一切照常。</p></div>
+  <div class="unit card" data-cat="adv"><div class="icon">📦</div><h4>开箱零配置</h4><p>复制文件重启服务器就能用，没有一堆参数要调。</p></div>
+  <div class="unit card" data-cat="adv"><div class="icon">🔄</div><h4>免重启热重载</h4><p>改完配置一条 Reload 命令立即生效，不断服不踢人。</p></div>
+  <div class="unit card" data-cat="core"><div class="icon">📝</div><h4>中文日志自适应</h4><p>控制台中文输出自动适配 3.54 / 3.55 服务器，不乱码。</p></div>
+</div>
+
+<!-- 03 重点功能 -->
+<section class="unit" id="s3" data-cat="core">
+  <div class="group">03 · 重点功能</div>
+  <h2>转盘拦截 <span class="badge ok">核心</span></h2>
+  <p><b>什么功能：</b>插件在服务器引擎层接管「多选项交互」入口，拦截规则全部写在 config.json 里——按选项索引、按物品蓝图想加几条加几条，每条规则还能配自己的气泡提示（文案、颜色、大小、时长各是各的），命中即拦截，服务器不作任何响应。</p>
+  <p><b>什么作用：</b>全服玩家的转盘类交互统一失效，转盘玩法从源头关闭；对玩家来说就是「点了没反应」，还能配置一条颜色、大小、时长、文案都可调的气泡提示告知原因，没有可绕过的客户端操作。</p>
+  <p><b>给你的好处：</b>没有它，你要么靠公告自觉、要么人工盯梢事后处罚，夜里没人盯时转盘照样转，处理纠纷还要翻记录自证；有了它，服务器 24 小时替你说「不」，重启服务器后插件随服务器自动加载，规则照常在岗——你睡觉，它值守。而且它只拦命中规则的转盘交互，其余玩法原样放行，玩家正常游戏毫无感知。</p>
+  <div class="shot">📷 此处应放截图：玩家对转盘使用选项前后对比（拦截生效画面）</div>
+</section>
+
+<!-- 04 运行效果 -->
+<section class="unit" id="s4" data-cat="core">
+  <div class="group">04 · 运行效果</div>
+  <h2>运行效果</h2>
+  <div class="shot">📷 此处应放截图：服务器控制台的插件启动横幅「先锋.禁止使用转盘(1.0)」</div>
+  <div class="shot">📷 此处应放截图：玩家点转盘选项无反应的效果画面</div>
+</section>
+
+<!-- 05 价格与购买 -->
+<section class="unit" id="s5" data-cat="env">
+  <div class="group">05 · 价格与购买</div>
+  <h2>价格与购买</h2>
+  <table class="data-table">
+    <tr><th style="width:150px">版本</th><th>包含内容</th><th style="width:120px">价格</th></tr>
+    <tr><td>正式版 1.0</td><td>插件本体 + 服主教程 + 玩家教程 + 配置文件</td><td>免费</td></tr>
+  </table>
+  <div class="note">咨询与获取：作者 QQ 711919 · 先锋方舟服主群 138535385（依据插件启动横幅与 <code>PluginInfo.json</code>）。价格与版本划分以发布信息为准。</div>
+</section>
+
+<div class="empty hide" id="emptyState">没有匹配的内容，换个关键词或分类试试</div>
+</main>
+
+<footer class="foot">
+  禁止使用转盘（TryMultiUse） · 软件简介 · 2026-09
+</footer>
+
+<script>
+(function(){
+var inp=document.getElementById('searchInput');
+var chips=[].slice.call(document.querySelectorAll('.chip'));
+var units=[].slice.call(document.querySelectorAll('.unit'));
+var empty=document.getElementById('emptyState');
+var cnt=document.getElementById('resultCount');
+var cat='all';
+function go(){
+  var q=(inp.value||'').trim().toLowerCase(),n=0;
+  units.forEach(function(u){
+    var okC=(cat=='all'||u.getAttribute('data-cat')==cat);
+    var t=(u.textContent||'').toLowerCase()+(u.getAttribute('data-kw')||'');
+    var okQ=!q||t.indexOf(q)>-1;
+    var s=okC&&okQ;u.classList.toggle('hide',!s);if(s)n++;
+  });
+  empty.classList.toggle('hide',n>0);
+  cnt.textContent=n+' / '+units.length+' 条';
+}
+chips.forEach(function(c){c.addEventListener('click',function(){
+  chips.forEach(function(x){x.classList.remove('on')});c.classList.add('on');
+  cat=c.getAttribute('data-cat');go();
+})});
+inp.addEventListener('input',go);go();
+})();
+</script>
+
+</body>
+</html>
