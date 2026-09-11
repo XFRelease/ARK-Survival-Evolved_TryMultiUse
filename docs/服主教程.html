@@ -165,7 +165,7 @@ details.faq .answer{color:var(--dim);padding-top:7px}
     <li><span class="step-title">确认服务器已安装 ArkApi</span><p>检查服务器目录 <code>ShooterGame\Binaries\Win64\ArkApi\</code> 是否存在 → 存在则继续；不存在请先安装 ArkApi（最低 3.5）。</p></li>
     <li><span class="step-title">复制插件文件</span><p>把 <code>PluginInfo.json</code>、<code>config.json</code>、<code>TryMultiUse.dll</code> 复制到 <code>ShooterGame\Binaries\Win64\ArkApi\Plugins\TryMultiUse\</code> → 目录不存在时先创建（工程自带的 <code>一键安装.bat</code> 会自动完成复制与建目录，并可选择同时部署停用副本 <code>TryMultiUse.dll.arkapi</code>）。</p></li>
     <li><span class="step-title">检查配置文件</span><p>打开插件目录下的 <code>config.json</code>，确认内容为合法 JSON → 配置详解见第四章。</p></li>
-    <li><span class="step-title">重启服务器</span><p>启动方舟服务器 → 服务器控制台出现「先锋.禁止使用转盘(1.0) 先锋方舟服主群:138535385 作者QQ:711919」横幅日志即表示插件加载成功（源码 <code>Main.cpp</code> 的 <code>Load()</code>）；随后输出「已加载 N 条拦截规则」（出厂预置为 2 条），这是拦截规则加载正常的标志；测试版还会输出一行「调试输出,测试编码」自检，这行中文显示正常就说明控制台编码匹配。</p></li>
+    <li><span class="step-title">重启服务器</span><p>启动方舟服务器 → 服务器控制台出现「先锋.禁止使用转盘(1.0) 先锋方舟服主群:138535385 作者QQ:711919」横幅日志即表示插件加载成功（源码 <code>Main.cpp</code> 的 <code>Load()</code>），这行中文显示正常同时说明控制台编码匹配；若控制台出现黄色「BlockRules …」警告，说明配置里的规则写得有问题，按警告提示修正即可。</p></li>
     <li><span class="step-title">验证插件已生效</span><p>进服对转盘物品使用转盘选项 → 选项无反应即拦截生效；其余交互（开门、开箱等）正常放行。</p></li>
     <li><span class="step-title">验证重载命令</span><p>在服务器控制台或 RCON 执行 <code>TryMultiUse.Reload</code> → 返回 <code>Reloaded config</code> 表示命令可用。</p></li>
   </ol>
@@ -251,7 +251,7 @@ details.faq .answer{color:var(--dim);padding-top:7px}
     <li><span class="step-title">拿到要拦的值</span><p>部署测试版插件 → 进服对要禁的交互操作一次 → 控制台输出「TryMultiUse:数字」（填 <code>UseIndex</code>）和「蓝图:路径」（填 <code>Blueprint</code>）两行，复制你要用的那个值。</p></li>
     <li><span class="step-title">在数组末尾加一条规则</span><p>打开 <code>config.json</code>，在 <code>BlockRules</code> 数组最后一条 <code>}</code> 后面加一个逗号，另起一行粘贴新规则——用哪种条件就写哪个键，另一个不用写。</p></li>
     <li><span class="step-title">按需配提示</span><p>想自定义提示就写 <code>Tip</code> 小节（文案 / 颜色 / 大小 / 时长见下方字段表）；整个 <code>Tip</code> 不写就用默认提示；想拦但<b>不</b>提示就写 <code>"Enabled": false</code>。</p></li>
-    <li><span class="step-title">热重载生效</span><p>控制台 / RCON 执行 <code>TryMultiUse.Reload</code> → 看到「已加载 N 条拦截规则」且数量比之前多一条，即加载成功。</p></li>
+    <li><span class="step-title">热重载生效</span><p>控制台 / RCON 执行 <code>TryMultiUse.Reload</code> → 返回 <code>Reloaded config</code> 即加载成功；控制台出现黄色「BlockRules …」警告则按警告修正规则。</p></li>
     <li><span class="step-title">进服验证</span><p>对目标交互再操作一次 → 被拦（配了提示的弹出对应提示）即成功；没拦到就对照调试输出的值检查拼写是否一致。</p></li>
   </ol>
   <p><b>多条规则示例</b>（3 个蓝图 + 2 个索引混着加，照抄后把值换成自己的即可）：</p>
@@ -282,7 +282,7 @@ details.faq .answer{color:var(--dim);padding-top:7px}
     <tr><td><code>blue</code></td><td>蓝 / 蓝色</td><td>蓝</td><td><code>cyan</code></td><td>青 / 青色</td><td>青</td></tr>
     <tr><td><code>yellow</code></td><td>黄 / 黄色</td><td>黄</td><td><code>purple</code></td><td>紫 / 紫色</td><td>紫红</td></tr>
   </table>
-  <div class="note">改完不用重启：控制台 / RCON 执行 <code>TryMultiUse.Reload</code> 即可热生效，加载成功会输出「已加载 N 条拦截规则」。提示每次命中都会弹出，文案别写太长（游戏内显示空间有限）；黑色文字在深色背景上不显眼，慎用。</div>
+  <div class="note">改完不用重启：控制台 / RCON 执行 <code>TryMultiUse.Reload</code> 即可热生效。提示每次命中都会弹出，文案别写太长（游戏内显示空间有限）；黑色文字在深色背景上不显眼，慎用。</div>
 </section>
 
 <section class="unit" id="u7" data-cat="cmd">
@@ -307,16 +307,16 @@ details.faq .answer{color:var(--dim);padding-top:7px}
   </table>
   <p>示例一：<code>TryMultiUse.Reload</code>（在服务器控制台直接输入：插件立即重新读取配置，成功时绿色提示）</p>
   <p>示例二：<code>TryMultiUse.Reload</code>（通过 RCON 工具发送：返回同样的处理结果，适合远程管理服务器时改配置）</p>
-  <p><b>反馈：</b>成功时绿色提示 <code>Reloaded config</code>，控制台同时输出「已加载 N 条拦截规则」（规则有问题时是对应的黄色警告），可用它确认规则按预期加载；配置文件缺失或 JSON 损坏时红色提示 <code>Failed to reload config</code>，错误详情写入日志，<b>此前的旧规则继续生效</b>不受影响（源码 <code>ReadConfig</code> 解析失败即中止，规则表不清空）。只能在控制台 / RCON 使用，不是游戏内聊天命令。</p>
+  <p><b>反馈：</b>成功时绿色提示 <code>Reloaded config</code>；规则写得有问题时控制台会出现对应的黄色警告（如「BlockRules 第 N 条规则没有 UseIndex / Blueprint 条件, 已跳过」），没有黄色警告即按配置正常加载；配置文件缺失或 JSON 损坏时红色提示 <code>Failed to reload config</code>，错误详情写入日志，<b>此前的旧规则继续生效</b>不受影响（源码 <code>ReadConfig</code> 解析失败即中止，规则表不清空）。只能在控制台 / RCON 使用，不是游戏内聊天命令。</p>
 </section>
 
 <section class="unit" id="u8" data-cat="faq">
   <div class="group">第六章 · 常见问题</div>
   <h2>常见问题</h2>
-  <details class="faq"><summary>控制台中文乱码（方块/问号）？</summary><div class="answer">先试这个：看插件启动时自检输出的「调试输出,测试编码」行——这行中文显示正常就说明编码匹配，无需处理；若这行乱码，保持 <code>ConsoleEncoding</code> 为 <code>auto</code>（插件会按服务器控制台代码页自动选择编码）并执行 <code>TryMultiUse.Reload</code>；仍乱码再按 ArkApi 版本显式指定——3.54 服务器设 <code>gbk</code>、3.55 服务器设 <code>utf8</code>。</div></details>
+  <details class="faq"><summary>控制台中文乱码（方块/问号）？</summary><div class="answer">先试这个：看插件启动时的横幅「先锋.禁止使用转盘(1.0)…」——这行中文显示正常就说明编码匹配，无需处理；若横幅乱码，保持 <code>ConsoleEncoding</code> 为 <code>auto</code>（插件会按服务器控制台代码页自动选择编码）并重启服务器再看横幅；仍乱码再按 ArkApi 版本显式指定——3.54 服务器设 <code>gbk</code>、3.55 服务器设 <code>utf8</code>。</div></details>
   <details class="faq"><summary>插件没加载，控制台提示 Can't open config.json？</summary><div class="answer">先试这个：检查 <code>ArkApi\Plugins\TryMultiUse\config.json</code> 是否存在、文件名拼写是否正确；存在则用 JSON 校验工具检查格式（多逗号、缺引号都会导致解析失败）。</div></details>
   <details class="faq"><summary>改了 config.json 但没生效？</summary><div class="answer">先试这个：在控制台或 RCON 执行 <code>TryMultiUse.Reload</code> 热重载；若提示 <code>Failed to reload config</code> 说明新配置格式有错，按报错修正后重试。仍不生效则重启服务器。</div></details>
-  <details class="faq"><summary>转盘还能用，没被拦截？</summary><div class="answer">先试这个：确认插件已加载（控制台有「先锋.禁止使用转盘(1.0)」横幅），再看启动 / 重载时输出的「已加载 N 条拦截规则」是否大于 0。拦截范围由 <code>BlockRules</code> 配置决定——你服上的转盘若来自其他模组/其他物品，用测试版插件对它交互一次，把控制台「TryMultiUse:」行里的数字填进 <code>UseIndex</code>（或「蓝图:」行的路径填进 <code>Blueprint</code>）加一条规则，执行 <code>TryMultiUse.Reload</code> 即可，详见第四章。</div></details>
+  <details class="faq"><summary>转盘还能用，没被拦截？</summary><div class="answer">先试这个：确认插件已加载（控制台有「先锋.禁止使用转盘(1.0)」横幅）且启动 / 重载时没有黄色「BlockRules …」警告（有警告按警告修正）。拦截范围由 <code>BlockRules</code> 配置决定——你服上的转盘若来自其他模组/其他物品，用测试版插件对它交互一次，把控制台「TryMultiUse:」行里的数字填进 <code>UseIndex</code>（或「蓝图:」行的路径填进 <code>Blueprint</code>）加一条规则，执行 <code>TryMultiUse.Reload</code> 即可，详见第四章。</div></details>
   <details class="faq"><summary>会不会误伤其他交互（开门、开箱、修理等）？</summary><div class="answer">不会。插件只在上面的两条拦截规则命中时拦截，其余交互原样交给游戏原函数处理（源码 <code>Hook_AActor_TryMultiUse</code>：未命中即调用原函数）。部署后建议抽查几项常用交互确认。</div></details>
   <details class="faq"><summary>怎么临时停用插件？</summary><div class="answer">把插件目录下的 <code>TryMultiUse.dll</code> 改名为 <code>TryMultiUse.dll.arkapi</code>（ArkApi 不加载该后缀），重启服务器即可停用；改回 <code>.dll</code> 恢复。工程的 <code>一键安装.bat</code> 也支持部署停用副本。</div></details>
   <details class="faq"><summary>怎么关掉 / 修改拦截时给玩家的提示？</summary><div class="answer">先试这个：提示是<b>每条规则各自的</b>——改 <code>config.json</code> 里对应规则内的 <code>Tip</code> 小节：<code>Enabled</code> 改 <code>false</code> 静默拦截，<code>Message</code> 改文案，<code>Color</code> / <code>Scale</code> / <code>Time</code> 调颜色、大小、时长；然后执行 <code>TryMultiUse.Reload</code> 热生效，详见第四章 BlockRules 小节。</div></details>
